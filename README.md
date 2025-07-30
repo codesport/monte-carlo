@@ -1,3 +1,6 @@
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py)
+
+
 # 📊 Monte Carlo Simulations for DeFi Liquidation Risk and Option Pricing
 
 
@@ -5,8 +8,6 @@
 This tutorial explains Monte Carlo methods through the lens of **DeFi liquidation risk** and **equity option pricing**, with equations, Python code, and **charts** for intuition.  
 
 We’ll use **Ethereum (ETH)** as the consistent underlying asset
-
-
 
 ---
 
