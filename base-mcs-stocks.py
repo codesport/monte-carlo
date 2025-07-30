@@ -4,6 +4,7 @@ assets (e.g., NVDA, APPL). Uses Geometric Brownian Motion (GBM) and
 pulls real price data via an API
 
 filename: base-mmcs-stocks.py
+author: Marcos A.B. (https://github.com/codesport)
 """
 
 

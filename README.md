@@ -1,5 +1,10 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py)
 
+# Credits
+
+This writeup was researched, tested, and compiled by Marcos A.B. (https://github.com/codesport). 
+
+He may be reached through [Code Sport's contact us page](https://codesport.io/contact-us)
 
 # 📊 Monte Carlo Simulations for DeFi Liquidation Risk and Option Pricing
 
