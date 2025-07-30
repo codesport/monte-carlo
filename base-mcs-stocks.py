@@ -36,8 +36,8 @@ S0 = nvda_prices.iloc[-1]  # last known NVIDIA price
 # Simulation parameters
 T = 30              # number of days to simulate
 simulations = 5000  # number of price paths
-target_gte_price = 1500   # example: NVIDIA reaching $1500
-target_lte_price = 900    # example: NVIDIA dropping to $900
+target_gte_price = 200   # example: NVIDIA reaching $1500
+target_lte_price = 165    # example: NVIDIA dropping to $900
 
 paths = np.zeros((T, simulations))
 paths[0] = S0
