@@ -15,12 +15,12 @@ import yfinance as yf
 from datetime import datetime, timedelta
 
 # === STEP 1: Fetch historical price data for NVIDIA (using yfinance) ===
-def fetch_stock_data(ticker="NVDA", period="7d"):
+def fetch_stock_data(ticker, period):
     stock = yf.Ticker(ticker)
     hist = stock.history(period=period)
-    return hist["Close"]
+    return hist["Close"], stock
 
-nvda_prices = fetch_stock_data("NVDA", "1y")
+nvda_prices, dat = fetch_stock_data("NVDA", "7d")
 log_returns = np.log(nvda_prices / nvda_prices.shift(1)).dropna()
 
 # === STEP 2: Compute log returns to estimate drift (mu) and vol (sigma) ===
@@ -56,7 +56,6 @@ print(f"Current NVDA Price: ${S0:.2f}")
 print(f"Probability NVDA reaches at least ${target_gte_price} in {T} days: {probability:.2%}")
 print(f"Probability NVDA falls to ${target_lte_price} in {T} days: {downside_probability:.2%}")
 
-dat = yf.Ticker(ticker)
 print(
 dat.info,
 dat.calendar,
