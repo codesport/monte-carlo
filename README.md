@@ -6,7 +6,7 @@ This writeup was researched, tested, and compiled by Marcos A.B. (https://github
 
 He may be reached through [Code Sport's contact us page](https://codesport.io/contact-us)
 
-# 📊 Monte Carlo Simulations for DeFi Liquidation Risk and Option Pricing
+# 📊 Monte Carlo Simulations in Financial Risk Managemnt
 
 
  **Monte Carlo simulations** allow us to model uncertainty, stress‑test financial portfolios, and make informed risk decisions.  
