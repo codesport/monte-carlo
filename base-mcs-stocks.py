@@ -15,7 +15,7 @@ import yfinance as yf
 from datetime import datetime, timedelta
 
 # === STEP 1: Fetch historical price data for NVIDIA (using yfinance) ===
-def fetch_stock_data(ticker="NVDA", period="1y"):
+def fetch_stock_data(ticker="NVDA", period="7d"):
     stock = yf.Ticker(ticker)
     hist = stock.history(period=period)
     return hist["Close"]
@@ -34,7 +34,7 @@ print(f"Estimated Daily Volatility (sigma): {sigma:.6f}")
 S0 = nvda_prices.iloc[-1]  # last known NVIDIA price
 
 # Simulation parameters
-T = 30              # number of days to simulate
+T = 7              # number of days to simulate
 simulations = 5000  # number of price paths
 target_gte_price = 200   # example: NVIDIA reaching $1500
 target_lte_price = 165    # example: NVIDIA dropping to $900
@@ -55,6 +55,15 @@ downside_probability = downside_hits / simulations
 print(f"Current NVDA Price: ${S0:.2f}")
 print(f"Probability NVDA reaches at least ${target_gte_price} in {T} days: {probability:.2%}")
 print(f"Probability NVDA falls to ${target_lte_price} in {T} days: {downside_probability:.2%}")
+
+dat = yf.Ticker(ticker)
+print(
+dat.info,
+dat.calendar,
+dat.analyst_price_targets,
+dat.quarterly_income_stmt,
+dat.history(period='7d'),
+)
 
 # === STEP 5: Confidence intervals ===
 p5 = np.percentile(paths, 5, axis=1)
