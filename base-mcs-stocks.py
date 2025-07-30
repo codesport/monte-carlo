@@ -11,7 +11,7 @@ author: Marcos A.B. (https://github.com/codesport)
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
-import yfinance as yf
+import yfinance as yf   # https://ranaroussi.github.io/yfinance
 from datetime import datetime, timedelta
 
 # === STEP 1: Fetch historical price data for NVIDIA (using yfinance) ===
