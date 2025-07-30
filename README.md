@@ -1,6 +1,6 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py)
 
-# Credits
+# Author Credits
 
 This writeup was researched, tested, and compiled by Marcos A.B. (https://github.com/codesport). 
 
