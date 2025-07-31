@@ -73,7 +73,7 @@ print(f"Latest ETH Price): {S0:.2f}")
 > Full code us availble at: [notebooks/nb-base-mcs-stocks.ipynb](https://github.com/codesport/monte-carlo/tree/master/notebooks/nb-base-mcs-stocks.ipynb) 
 
 > [!TIP]
-> Run simulation on Google Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-base-mcs-stocks.ipynb
+> Run simulation on Google Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-base-mcs-stocks.ipynb)
 
 ### 1b. Monte Carlo for Option Pricing
 
