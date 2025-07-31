@@ -247,6 +247,9 @@ $$
 P(\text{touch}) = \frac{\left| \{ \text{simulated paths where } \min_{t \leq T} S_t \leq B \} \right|}{\text{Total Paths}}
 $$
 
+> [!TIP]
+> In probability/statistics, instead of `#` for “number of,” use cardinality notation with absolute values: 
+> #{sumlatioins} becomes |simulations|
 
 ### Python Implementation
 
