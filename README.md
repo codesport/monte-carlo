@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/nb-base-mcs-stocks.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-readme.ipynb)
 
 # Author Credits
 
@@ -36,7 +36,7 @@ $$
 - $\Delta t$: Time increment  
 - $Z \sim \mathcal{N}(0,1)$: Standard normal random variable  
 
-**Python Setup**
+#### 💻 Python Setup
 
 ```python
 import numpy as np
@@ -44,7 +44,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import requests
 
-# Fetch ETH historical price data
+# === STEP 1: Fetch historical price data (CoinGecko API for ETH) ===
 def fetch_crypto_data(coin_id="ethereum", vs_currency="usd", days=365):
     url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
     params = {"vs_currency": vs_currency, "days": days}
@@ -54,9 +54,18 @@ def fetch_crypto_data(coin_id="ethereum", vs_currency="usd", days=365):
 
 eth_prices = fetch_crypto_data()
 log_returns = np.log(eth_prices / eth_prices.shift(1)).dropna()
+
+# === STEP 2: Compute log returns to estimate drift (mu) and vol (sigma) ===
 mu = log_returns.mean()
 sigma = log_returns.std()
-S0 = eth_prices.iloc[-1]
+S0 = eth_prices.iloc[-1] # last known ETH price. Latest ETH price (at t=0)
+
+print(f"Estimated Daily Drift (mu): {mu:.6f}")
+print(f"Estimated Daily Volatility (sigma): {sigma:.6f}")
+print(f"Latest ETH Price): {S0:.2f}")
+
+# === STEP 3: Monte Carlo Simulation ===
+# ...
 ```
 
 ### 1b. Monte Carlo for Option Pricing
