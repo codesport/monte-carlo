@@ -1,0 +1,39 @@
+name: Convert Markdown Files to Jupyter Notebooks
+
+on:
+  push:
+    paths:
+      - '**/*.md'
+
+jobs:
+  convert-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0  # Required for pushing
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        pip install nbformat
+
+    - name: Run Markdown to Notebook Conversion Script
+      run: |
+        python .github/workflows/convert-md-nb.py
+
+    - name: Commit and push generated notebooks
+      run: |
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add notebooks/*.ipynb
+        git commit -m "Auto-convert Markdown to notebooks" || echo "No changes to commit"
+        git push
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

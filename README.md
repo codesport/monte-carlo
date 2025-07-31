@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/nb-base-mcs-stocks.ipynb)
 
 # Author Credits
 
@@ -141,23 +141,41 @@ Where:
 ```python
 import numpy as np
 
+# --- Step 1: Simulate Geometric Brownian Motion paths ---
+def simulate_gbm(S0, r, sigma, T, steps, sims):
+    dt = T / steps
+    paths = np.zeros((steps+1, sims))
+    paths[0] = S0
+    for t in range(1, steps+1):
+        Z = np.random.standard_normal(sims)
+        paths[t] = paths[t-1] * np.exp((r - 0.5 * sigma**2) * dt + sigma * np.sqrt(dt) * Z)
+    return paths
+
+# --- Step 2: Price American Call using LSM ---
 def price_american_call(S0, K, r, sigma, T, steps=50, sims=5000):
-    dt = T/steps
-    paths = simulate_gbm(S0, r, sigma, T, dt, sims)
+    dt = T / steps
+    paths = simulate_gbm(S0, r, sigma, T, steps, sims)
     payoffs = np.maximum(paths - K, 0)
 
-    V = payoffs[-1]
+    V = payoffs[-1]  # option values at maturity
+
     for t in reversed(range(1, steps)):
-        itm = payoffs[t] > 0
-        X = paths[t, itm]
-        Y = V[itm] * np.exp(-r*dt)
-        if len(X) > 0:
+        itm = payoffs[t] > 0  # in-the-money paths
+        if np.any(itm):
+            X = paths[t, itm]
+            Y = V[itm] * np.exp(-r * dt)  # discounted continuation values
+
+            # Regression to estimate continuation value
             coeffs = np.polyfit(X, Y, 2)
             continuation = np.polyval(coeffs, X)
+
+            # Exercise if immediate payoff better than continuation
             exercise = payoffs[t, itm]
-            V[itm] = np.where(exercise > continuation, exercise, V[itm] * np.exp(-r*dt))
-        V[~itm] = V[~itm] * np.exp(-r*dt)
-    return np.mean(V) * np.exp(-r*dt)
+            V[itm] = np.where(exercise > continuation, exercise, V[itm] * np.exp(-r * dt))
+        V[~itm] = V[~itm] * np.exp(-r * dt)
+
+    return np.mean(V) * np.exp(-r * dt)
+
 ```
 ---
 ## 2. Number of Simulations: 500 vs 5000
