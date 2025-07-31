@@ -2,14 +2,15 @@
 
 # Author Credits
 
-This writeup was researched, tested, and compiled by Marcos A.B. (https://github.com/codesport). 
+This writeup was researched, tested, and compiled by Marcos A.B. (https://github.com/codesport). Marcos was a former AVP in HY Risk Management at Credit Suisse (now UBS) and former International Risk Manager at Genworth Financial.
 
 He may be reached through [Code Sport's contact us page](https://codesport.io/contact-us)
 
-# 📊 Monte Carlo Simulations in Financial Risk Managemnt
+# Monte Carlo Simulations in Financial Risk Managemnt
 
 
  **Monte Carlo simulations** allow us to model uncertainty, stress‑test financial portfolios, and make informed risk decisions.  
+
 This tutorial explains Monte Carlo methods through the lens of **DeFi liquidation risk** and **equity option pricing**, with equations, Python code, and **charts** for intuition.  
 
 We’ll use **Ethereum (ETH)** as the consistent underlying asset
@@ -67,6 +68,12 @@ print(f"Latest ETH Price): {S0:.2f}")
 # === STEP 3: Monte Carlo Simulation ===
 # ...
 ```
+
+> [!NOTE]
+> Full code us availble at: [notebooks/nb-base-mcs-stocks.ipynb](https://github.com/codesport/monte-carlo/tree/master/notebooks/nb-base-mcs-stocks.ipynb) 
+
+> [!TIP]
+> Run simulation on Google Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-readme.ipynb)
 
 ### 1b. Monte Carlo for Option Pricing
 
