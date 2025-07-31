@@ -93,7 +93,7 @@ $$
 - $d_1 = \frac{\ln(S_0/K) + (r + 0.5\sigma^2)T}{\sigma \sqrt{T}}$  
 - $d_2 = d_1 - \sigma\sqrt{T}$
 
-**Python Implementation**
+#### 💻 Python Implementation for European Call Option
 
 ```python
 import numpy as np
@@ -136,7 +136,7 @@ Where:
 - $T$ = expiration time  
 - “optimal exercise policy” = decision rule from regression continuation value  
 
-### 💻 Python Skeleton (with Longstaff–Schwartz)
+#### 💻 American Call Option Pricing via Least Squares Monte Carlo (LSM)
 
 ```python
 import numpy as np
@@ -175,6 +175,16 @@ def price_american_call(S0, K, r, sigma, T, steps=50, sims=5000):
         V[~itm] = V[~itm] * np.exp(-r * dt)
 
     return np.mean(V) * np.exp(-r * dt)
+
+S0 = 3700    # ETH starting price
+K = 3800     # Strike price
+r = 0.02     # 2% risk-free rate
+sigma = 0.5  # 50% annual volatility
+T = 0.25     # 3 months to maturity
+
+price = price_american_call(S0, K, r, sigma, T)
+print(f"American Call Option Price: ${price:.2f}")
+
 
 ```
 ---
