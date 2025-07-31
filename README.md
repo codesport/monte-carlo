@@ -244,8 +244,9 @@ For example, in lending protocols, liquidation may occur if the asset price drop
 The probability that ETH touches a barrier $B$ at least once within horizon $T$ is:
 
 $$
-P(\text{touch}) = \frac{\#\{ \text{simulated paths where } \min_{t \leq T} S_t \leq B \}}{\text{Total Paths}}
+P(\text{touch}) = \frac{\left| \{ \text{simulated paths where } \min_{t \leq T} S_t \leq B \} \right|}{\text{Total Paths}}
 $$
+
 
 ### Python Implementation
 

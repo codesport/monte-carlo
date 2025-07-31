@@ -33,11 +33,10 @@ for md_path in md_files:
         }
     })
 
-    '''
-    # Use filename stem for .ipynb name
+    # Use filename stem for .ipynb name ->   output_file = output_dir / (md_path.stem + ".ipynb")
     #  - New notebook name is prepended with "nb-" and then the 
     #   original stem forced to all lowercase
-    '''
+
     output_file = output_dir / f"nb-{md_path.stem.lower()}.ipynb"
     with open(output_file, "w", encoding="utf-8") as f:
         nbformat.write(nb, f)
