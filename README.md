@@ -1,4 +1,5 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2Fbase-mcs-stocks.py) [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-readme.ipynb)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2F%2Fnotebooks%2Fnb-readme.ipynb)
+ [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-readme.ipynb)
 
 # Author Credits
 
