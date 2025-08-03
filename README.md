@@ -3,9 +3,63 @@
 
 # Author Credits
 
-This writeup was researched, tested, and compiled by Marcos A.B. (https://github.com/codesport). Marcos was a former AVP in HY Risk Management at Credit Suisse (now UBS) and former International Risk Manager at Genworth Financial.
+This writeup was researched, tested, and compiled by **Marcos A.B. (https://github.com/codesport)**. 
+
+Marcos was a former **AVP in HY Risk Management** at Credit Suisse (now UBS) and former **International Risk Manager at Genworth Financial**.
 
 He may be reached through [Code Sport's contact us page](https://codesport.io/contact-us)
+
+# Table of Contents<!-- omit from toc -->
+- [Author Credits](#author-credits)
+- [Monte Carlo Simulations in Financial Risk Managemnt](#monte-carlo-simulations-in-financial-risk-managemnt)
+  - [1. What is a Monte Carlo Simulation?](#1-what-is-a-monte-carlo-simulation)
+    - [1.2.0 Definition and Geometric Brownian Motion (GBM)](#120-definition-and-geometric-brownian-motion-gbm)
+      - [1.2.1 💻 Python Setup](#121--python-setup)
+    - [1.3.0 Monte Carlo for Option Pricing](#130-monte-carlo-for-option-pricing)
+      - [1.4.0 European Call Option](#140-european-call-option)
+        - [1.4.1 💻 Python Implementation for European Call Option](#141--python-implementation-for-european-call-option)
+      - [1.5.0 American Call Options](#150-american-call-options)
+        - [1.5.1 💻 American Call Option Pricing via Least Squares Monte Carlo (LSM)](#151--american-call-option-pricing-via-least-squares-monte-carlo-lsm)
+  - [2. Number of Simulations: 500 vs 5000](#2-number-of-simulations-500-vs-5000)
+    - [Visualization Example](#visualization-example)
+  - [3. Probability of Touching a Price](#3-probability-of-touching-a-price)
+    - [Mathematical Formulation](#mathematical-formulation)
+    - [Python Implementation](#python-implementation)
+      - [Intuition](#intuition)
+  - [4. Liquidation Risk Model](#4-liquidation-risk-model)
+    - [Python Implementation](#python-implementation-1)
+    - [Intuition](#intuition-1)
+  - [5. Value-at-Risk (VaR)](#5-value-at-risk-var)
+    - [Formula](#formula)
+    - [Python Implementation](#python-implementation-2)
+    - [Why the 5th Percentile?](#why-the-5th-percentile)
+  - [6. Drift (μ) and Volatility (σ)](#6-drift-μ-and-volatility-σ)
+    - [6a. Interpretation](#6a-interpretation)
+    - [6b. Volatility Estimation](#6b-volatility-estimation)
+    - [Which Historical Window Should You Use?](#which-historical-window-should-you-use)
+  - [7. Confidence Intervals and Percentiles](#7-confidence-intervals-and-percentiles)
+    - [Key Percentiles](#key-percentiles)
+    - [Visualization Example](#visualization-example-1)
+    - [Interpretation in DeFi Context](#interpretation-in-defi-context)
+  - [8. Business Requirement: Ensuring \<5% Chance of Undercollateralization](#8-business-requirement-ensuring-5-chance-of-undercollateralization)
+    - [Mathematical Formulation](#mathematical-formulation-1)
+    - [8b: Python Implementation Set 1](#8b-python-implementation-set-1)
+    - [Explanation](#explanation)
+    - [Practical Implication](#practical-implication)
+  - [8c. Python Implementation Set 2](#8c-python-implementation-set-2)
+    - [Step 1: Define Liquidation Condition](#step-1-define-liquidation-condition)
+    - [Step 2: Iterate Over Thresholds](#step-2-iterate-over-thresholds)
+    - [Step 3: Interpret Results](#step-3-interpret-results)
+    - [📊 Interpretation](#-interpretation)
+  - [✅ Conclusion](#-conclusion)
+- [Appendix I: GitHub Actions and Workflows](#appendix-i-github-actions-and-workflows)
+- [Appendix II: Scikit-learn](#appendix-ii-scikit-learn)
+  - [Python library for machine learning and statistical modeling.](#python-library-for-machine-learning-and-statistical-modeling)
+  - [Application to DeFi \& Risk Modeling](#application-to-defi--risk-modeling)
+- [Appendix III: When Principal Component Analysis (PCA) is Used in Finance \& Risk Modeling](#appendix-iii-when-principal-component-analysis-pca-is-used-in-finance--risk-modeling)
+  - [Multi-Asset Portfolio Risk](#multi-asset-portfolio-risk)
+  - [Yield Curve Modeling (Fixed Income)](#yield-curve-modeling-fixed-income)
+
 
 # Monte Carlo Simulations in Financial Risk Managemnt
 
@@ -20,9 +74,9 @@ We’ll use **Ethereum (ETH)** as the consistent underlying asset
 
 ## 1. What is a Monte Carlo Simulation?
 
-A **Monte Carlo simulation** is a method for estimating the probability distribution of outcomes by generating a large number of random trials.  
+A **Monte Carlo simulation** is a method for estimating the probability distribution of outcomes by generating a large number of random trials. A repeated random sampling technique used to estimate the probability distribution of uncertain outcomes.  
 
-### 1a. Definition and Geometric Brownian Motion (GBM)
+### 1.2.0 Definition and Geometric Brownian Motion (GBM)
 
 
 In finance, asset prices are often modeled using **Geometric Brownian Motion (GBM)**:
@@ -33,12 +87,12 @@ $$
 
 **Where:**
 - $S_t$: Asset price at time t  
-- $\mu$: Drift (expected return per step)  
+- $\mu$: Drift (expected return per step) = mean of returns 
 - $\sigma$: Volatility (standard deviation of returns)  
 - $\Delta t$: Time increment  
 - $Z \sim \mathcal{N}(0,1)$: Standard normal random variable  
 
-#### 💻 Python Setup
+#### 1.2.1 💻 Python Setup
 
 ```python
 import numpy as np
@@ -76,7 +130,7 @@ print(f"Latest ETH Price): {S0:.2f}")
 > [!TIP]
 > Run simulation on Google Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-base-mcs-stocks.ipynb)
 
-### 1b. Monte Carlo for Option Pricing
+### 1.3.0 Monte Carlo for Option Pricing
 
 Monte Carlo methods are often used to price options. American options can be exercised at any time before expiration. European options cannot.
 
@@ -92,7 +146,7 @@ The key idea:
 * Discount the average payoff back to today.
 
 
-#### European Call Option
+#### 1.4.0 European Call Option
 
 The Black–Scholes formula for a **European call option** is:
 
@@ -110,7 +164,7 @@ $$
 - $d_1 = \frac{\ln(S_0/K) + (r + 0.5\sigma^2)T}{\sigma \sqrt{T}}$  
 - $d_2 = d_1 - \sigma\sqrt{T}$
 
-#### 💻 Python Implementation for European Call Option
+##### 1.4.1 💻 Python Implementation for European Call Option
 
 ```python
 import numpy as np
@@ -132,7 +186,7 @@ price = european_call_price(S0, K, T, r, sigma)
 print(f"European Call Option Price: {price:.2f}")
 ```
 
-#### American Call Options
+#### 1.5.0 American Call Options
 
 American options allow early exercise, making closed-form solutions more complex.
 One numerical method is the Longstaff–Schwartz Monte Carlo algorithm, which uses regression to estimate the continuation value.
@@ -153,7 +207,7 @@ Where:
 - $T$ = expiration time  
 - “optimal exercise policy” = decision rule from regression continuation value  
 
-#### 💻 American Call Option Pricing via Least Squares Monte Carlo (LSM)
+##### 1.5.1 💻 American Call Option Pricing via Least Squares Monte Carlo (LSM)
 
 ```python
 import numpy as np
@@ -419,12 +473,21 @@ We examine the **5th percentile** of outcomes because:
 
 Monte Carlo simulations of asset prices using **Geometric Brownian Motion (GBM)** require two critical parameters: **drift (μ)** and **volatility (σ)**.
 
+```python
+log_returns = np.log(prices / prices.shift(1)).dropna()
+mu = log_returns.mean()
+sigma = log_returns.std()
+
+```
+
 ---
 
 ### 6a. Interpretation
 
+If you want to model n-day drift and vol, you scale depending on how many periods your horizon spans:
+
 - **Drift (μ)**:  
-  **average expected log return per time step** (e.g., per day).  
+  **average expected log return per time step** (e.g., per day if you data feed is daily closing prices).  
   Over $n$ days:
 
   $$
@@ -432,7 +495,7 @@ Monte Carlo simulations of asset prices using **Geometric Brownian Motion (GBM)*
   $$
 
 - **Volatility (σ)**:  
-  Measures the **uncertainty or dispersion** of returns.  
+  Measures the **uncertainty or dispersion** of returns (per day).  
   Over $n$ days:
 
   $$
@@ -445,8 +508,17 @@ Monte Carlo simulations of asset prices using **Geometric Brownian Motion (GBM)*
 - $n$: number of days in the forecast horizon  
 
 In other words:  
-- Drift gives the **directional tendency** of ETH’s price.  
+- Drift gives the **directional tendency** of price.  
 - Volatility gives the **scale of randomness** (how wide the distribution of possible outcomes is).
+
+```python
+trading_days = 252
+mu_annual = mu_daily * trading_days
+sigma_annual = sigma_daily * np.sqrt(trading_days)
+# TODO: Add print f
+
+```
+
 
 ---
 
@@ -483,23 +555,29 @@ print(f"Estimated daily volatility (σ): {sigma:.6f}")
 ### Which Historical Window Should You Use?
 
 - **Short windows (e.g., last 30 days):**  
-  Capture **recent market behavior** but may be noisy.  
+  Capture **recent market volatilty behavior**.  Useful for near‑term predictions.
 
 - **Longer windows (e.g., 365 days):**  
   Provide **stability** in estimates but may lag in capturing regime changes.  
 
-**Guideline:**  
+**Guideline 1:**  Use shorter lookback for predictions, longer lookback for risk limits.
+* Use shorter windows for trading models.
+
+* Use longer windows for risk management models.
+
+**Guideline 2:**  
 For modeling ETH liquidation risk over 30 days, using **365 days of volatility data** is common, as it balances accuracy and stability.  
 However, during highly volatile periods, **shorter windows** may better reflect the current environment.
 
-
-**Pro Tip:** For our risk modeling we calculate volatilty using n-days of volatilty.
-**Where:**
- n  =  intended holding period of the asset
-
-Additionally, to account for seasonality we may also use pricing data over the same period but 1 year prior. For example, for n = 7-day holding period:
-
-If we intend to hold asset from August 7, 2025 to August 14, 2025,  we'll compute σ using both August 7, 2024 to August 14, 2024 and July 31, 2025 to August 7, 2025.
+> [!NOTE]
+> For our risk modeling we calculate volatilty using n-days of volatilty.
+> **Where:**
+> n  =  intended holding period of the asset
+>
+> Additionally, to account for seasonality we may also use pricing data over the same period but 1 year prior. 
+> For example, for n = 7-day holding period:
+>
+>If we intend to hold asset from August 7, 2025 to August 14, 2025,  we'll compute σ using both August 7, 2024 to August 14, 2024 and July 31, 2025 to August 7, 2025.
 
 ---
 
@@ -708,4 +786,52 @@ By combining math, Monte Carlo simulations, and visuals, we can:
 This approach works in DeFi, US equities, or derivatives pricing. It turns abstract math into actionable risk management.
 
 
+# Appendix I: GitHub Actions and Workflows
 
+I created a Python script and a .yml file that does the following:
+
+1. Whenever I push a new version of the README.md GitHub actions bot runs my "Markdown to Jupyter" notebook conversion script
+
+2. Then commit and push the newly generated Jupyter notebook to a folder called mynotebooks this my repo.
+
+3. `GITHUB_TOKEN` is automatically created by GitHub Actions for each workflow run, but it must be given write permissions via the repos setting:
+   - Settings → Actions → General -> Scroll to Workflow permissions -> "Read and write permissions" 
+
+
+# Appendix II: Scikit-learn
+
+## Python library for machine learning and statistical modeling.
+
+* Tools for model selection, validation, and preprocessing
+
+* Suited for medium-sized datasets (unlike TensorFlow/PyTorch, which are better for very large-scale deep learning)
+
+* Ideal for prototyping, teaching, and applied machine learning projects
+
+## Application to DeFi & Risk Modeling 
+
+* Volatility forecasting (via regression models)
+
+* Classification (predicting likelihood of liquidation events)
+
+* Dimensionality reduction (e.g., analyzing factors affecting ETH prices)
+
+# Appendix III: When Principal Component Analysis (PCA) is Used in Finance & Risk Modeling
+
+## Multi-Asset Portfolio Risk
+
+PCA is most valuable when you’re modeling many correlated risk factors or assets. For example, a Monte Carlo simulation for a portfolio of 50 stocks (or multiple DeFi assets)
+
+## Yield Curve Modeling (Fixed Income)
+
+Common in bond pricing and risk models.
+
+PCA often finds:
+
+- PC1: Level of the yield curve
+
+- PC2: Slope of the curve
+
+- PC3: Curvature of the curve
+
+These three factors explain ~95% of yield curve movements
