@@ -3,7 +3,7 @@
 
 # Author Credits
 
-This writeup was researched, tested, and compiled by **Marcos A.B. (https://github.com/codesport)**. 
+This writeup was researched, tested, and compiled by **[Marcos](https://github.com/codesport)**. 
 
 Marcos was a former **AVP in HY Risk Management** at Credit Suisse (now UBS) and former **International Risk Manager at Genworth Financial**.
 
@@ -15,11 +15,6 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
   - [1. What is a Monte Carlo Simulation?](#1-what-is-a-monte-carlo-simulation)
     - [1.2.0 Definition and Geometric Brownian Motion (GBM)](#120-definition-and-geometric-brownian-motion-gbm)
       - [1.2.1 💻 Python Setup](#121--python-setup)
-    - [1.3.0 Monte Carlo for Option Pricing](#130-monte-carlo-for-option-pricing)
-      - [1.4.0 European Call Option](#140-european-call-option)
-        - [1.4.1 💻 Python Implementation for European Call Option](#141--python-implementation-for-european-call-option)
-      - [1.5.0 American Call Options](#150-american-call-options)
-        - [1.5.1 💻 American Call Option Pricing via Least Squares Monte Carlo (LSM)](#151--american-call-option-pricing-via-least-squares-monte-carlo-lsm)
   - [2. Number of Simulations: 500 vs 5000](#2-number-of-simulations-500-vs-5000)
     - [Visualization Example](#visualization-example)
   - [3. Probability of Touching a Price](#3-probability-of-touching-a-price)
@@ -130,6 +125,8 @@ print(f"Latest ETH Price): {S0:.2f}")
 > [!TIP]
 > Run simulation on Google Colab [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-base-mcs-stocks.ipynb)
 
+
+<!-->
 ### 1.3.0 Monte Carlo for Option Pricing
 
 Monte Carlo methods are often used to price options. American options can be exercised at any time before expiration. European options cannot.
@@ -258,11 +255,17 @@ print(f"American Call Option Price: ${price:.2f}")
 
 
 ```
+
+-->
 ---
 ## 2. Number of Simulations: 500 vs 5000
 
-Monte Carlo simulations rely on generating many random paths for the underlying asset price.  
-The number of simulations chosen directly affects both the **accuracy** and the **computational cost**.
+Monte Carlo simulations generate random paths for the underlying asset's price.  The number of simulations chosen directly affects both the **accuracy** and the **computational cost**.
+
+For example, this line: `paths = np.zeros((rows, columns))` generates a 2D matrix of size row x column and fills it with zeros
+
+We then initialize position 0x0 of our matrix with the current asset price of S0: `paths[0] = S0`
+
 
 - **500 simulations**
   - Faster to run, less accurate. Higher variance in estimates
