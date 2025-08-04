@@ -11,7 +11,7 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
 
 # Table of Contents<!-- omit from toc -->
 - [Author Credits](#author-credits)
-- [Monte Carlo Simulations in Financial Risk Managemnt](#monte-carlo-simulations-in-financial-risk-managemnt)
+- [Monte Carlo Simulations in Financial Risk Management](#monte-carlo-simulations-in-financial-risk-management)
   - [1. What is a Monte Carlo Simulation?](#1-what-is-a-monte-carlo-simulation)
     - [1.2.0 Definition and Geometric Brownian Motion (GBM)](#120-definition-and-geometric-brownian-motion-gbm)
       - [1.2.1 💻 Python Setup](#121--python-setup)
@@ -56,7 +56,7 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
   - [Yield Curve Modeling (Fixed Income)](#yield-curve-modeling-fixed-income)
 
 
-# Monte Carlo Simulations in Financial Risk Managemnt
+# Monte Carlo Simulations in Financial Risk Management
 
 
  **Monte Carlo simulations** allow us to model uncertainty, stress‑test financial portfolios, and make informed risk decisions.  
