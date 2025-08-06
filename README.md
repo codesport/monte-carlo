@@ -1,11 +1,10 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/codesport/monte-carlo/HEAD?urlpath=%2Fdoc%2Ftree%2F%2Fnotebooks%2Fnb-readme.ipynb)
  [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/codesport/monte-carlo/blob/master/notebooks/nb-readme.ipynb)
 
+# Monte Carlo Simulations in Decentralized Financial (DeFi) Risk Management<!-- omit from toc -->
 # Author Credits
 
-This writeup was researched, tested, and compiled by **[Marcos](https://github.com/codesport)**. 
-
-Marcos was a former **AVP in HY Risk Management** at Credit Suisse (now UBS) and former **International Risk Manager at Genworth Financial**.
+This DeFi Financial Risk Management tutorial was researched and tested by **[Marcos](https://github.com/codesport)**.  
 
 He may be reached through [Code Sport's contact us page](https://codesport.io/contact-us)
 
@@ -13,6 +12,7 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
 - [Author Credits](#author-credits)
 - [Monte Carlo Simulations in Financial Risk Management](#monte-carlo-simulations-in-financial-risk-management)
   - [1. What is a Monte Carlo Simulation?](#1-what-is-a-monte-carlo-simulation)
+  - [1.1.0 What is a Regression Analysis?](#110-what-is-a-regression-analysis)
     - [1.2.0 Definition and Geometric Brownian Motion (GBM)](#120-definition-and-geometric-brownian-motion-gbm)
       - [1.2.1 💻 Python Setup](#121--python-setup)
   - [2. Number of Simulations: 500 vs 5000](#2-number-of-simulations-500-vs-5000)
@@ -50,7 +50,7 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
 - [Appendix I: GitHub Actions and Workflows](#appendix-i-github-actions-and-workflows)
 - [Appendix II: Scikit-learn](#appendix-ii-scikit-learn)
   - [Python library for machine learning and statistical modeling.](#python-library-for-machine-learning-and-statistical-modeling)
-  - [Application to DeFi \& Risk Modeling](#application-to-defi--risk-modeling)
+  - [Scikit-learn for DeFi Risk Modeling](#scikit-learn-for-defi-risk-modeling)
 - [Appendix III: When Principal Component Analysis (PCA) is Used in Finance \& Risk Modeling](#appendix-iii-when-principal-component-analysis-pca-is-used-in-finance--risk-modeling)
   - [Multi-Asset Portfolio Risk](#multi-asset-portfolio-risk)
   - [Yield Curve Modeling (Fixed Income)](#yield-curve-modeling-fixed-income)
@@ -58,10 +58,9 @@ He may be reached through [Code Sport's contact us page](https://codesport.io/co
 
 # Monte Carlo Simulations in Financial Risk Management
 
+This tutorial explains Monte Carlo methods through the lens of **DeFi liquidation risk** with equations, Python code, and **charts** for intuition.
 
- **Monte Carlo simulations** allow us to model uncertainty, stress‑test financial portfolios, and make informed risk decisions.  
-
-This tutorial explains Monte Carlo methods through the lens of **DeFi liquidation risk** and **equity option pricing**, with equations, Python code, and **charts** for intuition.  
+Monte Carlo simulations allow us to model uncertainty, stress‑test financial portfolios, and make informed risk decisions.  
 
 We’ll use **Ethereum (ETH)** as the consistent underlying asset
 
@@ -71,14 +70,24 @@ We’ll use **Ethereum (ETH)** as the consistent underlying asset
 
 A **Monte Carlo simulation** is a method for estimating the probability distribution of outcomes by generating a large number of random trials. A repeated random sampling technique used to estimate the probability distribution of uncertain outcomes.  
 
-### 1.2.0 Definition and Geometric Brownian Motion (GBM)
+## 1.1.0 What is a Regression Analysis?
+Regression analysis attempts to establish a relationship between a dependent variable and one or more independent variables (factors). It helps predict the value of the dependent variable based on the values of the independent variables. In the case of housing, hme prices would be the dependent variable while employment rate, yield on the 10-year Treasury, and fed-funds rate are factors that drive home prices. 
 
+R-squared assesses how well independent variables predicts a dependent variable
+
+### 1.2.0 Definition and Geometric Brownian Motion (GBM)
 
 In finance, asset prices are often modeled using **Geometric Brownian Motion (GBM)**:
 
 $$
 S_{t+\Delta t} = S_t \cdot \exp\Big( (\mu - \tfrac{1}{2}\sigma^2)\Delta t + \sigma \sqrt{\Delta t}\cdot Z \Big)
 $$
+
+According to [C. Browne](https://www.thegoldensource.com/lognormality-gbm-and-black-scholes):
+
+> GBM is the stochastic differential equation (SDE) that underlies the Black Scholes Merton (BSM) model. GBM is converted into the BSM partial differential equation (PDE) for option price movements using Ito's Lemma
+> Source: [C. Browne](https://www.linkedin.com/posts/brownecharlie_black-scholes-vs-the-heston-model-geometric-activity-7219453162997321729-RA6P)
+
 
 **Where:**
 - $S_t$: Asset price at time t  
@@ -573,7 +582,7 @@ For modeling ETH liquidation risk over 30 days, using **365 days of volatility d
 However, during highly volatile periods, **shorter windows** may better reflect the current environment.
 
 > [!NOTE]
-> For our risk modeling we calculate volatilty using n-days of volatilty.
+> For our risk modeling we calculate volatility using n-days of volatility.
 > **Where:**
 > n  =  intended holding period of the asset
 >
@@ -811,7 +820,9 @@ I created a Python script and a .yml file that does the following:
 
 * Ideal for prototyping, teaching, and applied machine learning projects
 
-## Application to DeFi & Risk Modeling 
+## Scikit-learn for DeFi Risk Modeling 
+
+Scikit has libraries for:
 
 * Volatility forecasting (via regression models)
 
