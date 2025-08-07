@@ -800,11 +800,11 @@ This approach works in DeFi, US equities, or derivatives pricing. It turns abstr
 
 # Appendix I: GitHub Actions and Workflows
 
-I created a Python script and a .yml file that does the following:
+I created a Python script that converts static markdown files to interactive Jupyter notebook (.ipynb) files. This script  is called by a .yml file that does the following:
 
 1. Whenever I push a new version of the README.md GitHub actions bot runs my "Markdown to Jupyter" notebook conversion script
 
-2. Then commit and push the newly generated Jupyter notebook to a folder called mynotebooks this my repo.
+2. Then commit and push the newly generated Jupyter notebook to a folder called `mynotebooks`
 
 3. `GITHUB_TOKEN` is automatically created by GitHub Actions for each workflow run, but it must be given write permissions via the repos setting:
    - Settings → Actions → General -> Scroll to Workflow permissions -> "Read and write permissions" 
